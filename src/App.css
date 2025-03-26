@@ -1,0 +1,49 @@
+.container {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "landing"
+    "booking";
+  color: #002C3A;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding-top: 20vh; /* header(8vh) + nav(10vh) 높이만큼 여백 */
+  margin-left: 15px;
+  margin-right:15px;
+}
+
+/* ✅ 모든 section과 내부 p 태그의 마진 제거 */
+section {
+  scroll-margin-top: 10vh;
+  margin: 0;
+  padding: 0;
+}
+
+section p {
+  margin: 0;
+}
+
+/* ✅ 각 section이 화면을 꽉 채우도록 높이 수정 */
+.landing {
+  grid-area: landing;
+  background-color: #d8d6d6;
+  height: 100vh;
+}
+
+.booking {
+  grid-area: booking;
+  background-color: #ffffff;
+  height: 100vh;
+}
+
+/* 🔥 모바일 대응용 컨테이너 여백 조정 */
+@media (max-width: 450px) {
+  .container {
+    min-height: 90vh;
+    grid-template-areas:
+      "landing"
+      "booking";
+    padding-top: 10vh;
+    padding-bottom: 10vh; /* 하단 네비게이션 영역 여백 */
+  }
+}
