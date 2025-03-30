@@ -4,6 +4,7 @@ const Landing = () => { // searchText를 prop으로 받음
         <br/>
         <h1 style={{ color: "#495E57" }}>This is </h1>
         <h1 style={{ color: "#495E57" }}>Little Lemon's Main Page</h1>
+        <h1 style={{ color: "#495E57" }}>Press 'Booking' button below pls. </h1>
       </section>
   );
 };
