@@ -1,18 +1,20 @@
-const MiniCard = ({ subject }) => {
+const MiniCard = ({ subject, selected, onClick }) => {
   return (
     <div
+      onClick={() => onClick(subject)}
       style={{
-        display: "inline-block",
+        flexShrink: 0,
         padding: "0.5rem 1rem",
         borderRadius: "6px",
-        backgroundColor: "#f4f4f4",
+        backgroundColor: selected ? "#facc15" : "#f4f4f4", // ✅ 선택 시 노란색
         border: "1px solid #ccc",
         fontSize: "0.9rem",
-        minWidth: "70px",       // 💡 모바일에서 너무 작아지지 않게
+        minWidth: "60px",
+        maxWidth: "80px",
         textAlign: "center",
         cursor: "pointer",
         whiteSpace: "nowrap",
-        flexShrink: 0,          // 💡 줄바꿈 없이 유지
+        transition: "background-color 0.2s",
       }}
     >
       {subject}

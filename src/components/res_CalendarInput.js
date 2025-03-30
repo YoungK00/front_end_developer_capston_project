@@ -1,21 +1,16 @@
 import React, { useState } from "react";
 
-function MiniCalendar({ notAvailable = [] }) {
+function MiniCalendar({ notAvailable = [], onDateSelect }) {
   const today = new Date();
   const [year] = useState(today.getFullYear());
-  const [month, setMonth] = useState(today.getMonth()); // 0 ~ 11
-  const [selectedDate, setSelectedDate] = useState(null); // 🔸 사용자가 클릭한 날짜
+  const [month, setMonth] = useState(today.getMonth());
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  const getDaysInMonth = (year, month) => {
-    return new Date(year, month + 1, 0).getDate();
-  };
-
-  const getStartDay = (year, month) => {
-    return new Date(year, month, 1).getDay();
-  };
+  const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
+  const getStartDay = (year, month) => new Date(year, month, 1).getDay();
 
   const daysInMonth = getDaysInMonth(year, month);
   const startDay = getStartDay(year, month);
@@ -42,11 +37,9 @@ function MiniCalendar({ notAvailable = [] }) {
   );
   const unavailableDates = currentMonthUnavailable?.date || [];
 
-  // 🔹 날짜 클릭 핸들러
   const handleDateClick = (day) => {
-    if (!unavailableDates.includes(day)) {
-      setSelectedDate(day);
-    }
+    setSelectedDate(day);
+    onDateSelect?.(monthNames[month], day); // ✅ BookingForm에 선택값 전달
   };
 
   return (
@@ -61,7 +54,7 @@ function MiniCalendar({ notAvailable = [] }) {
         boxSizing: "border-box",
       }}
     >
-      {/* 📅 년도 + 월 선택 */}
+      {/* 상단: 년도 + 월 선택 */}
       <div
         style={{
           display: "flex",
@@ -76,7 +69,7 @@ function MiniCalendar({ notAvailable = [] }) {
           value={month}
           onChange={(e) => {
             setMonth(parseInt(e.target.value));
-            setSelectedDate(null); // 달 변경 시 선택 초기화
+            setSelectedDate(null); // 월 바뀌면 선택 초기화
           }}
           style={{ padding: "0.2rem 0.4rem", fontSize: "1rem" }}
         >
@@ -88,7 +81,7 @@ function MiniCalendar({ notAvailable = [] }) {
         </select>
       </div>
 
-      {/* 🗓️ 요일 + 날짜 격자 */}
+      {/* 달력 격자 */}
       <div
         style={{
           display: "grid",
@@ -97,8 +90,8 @@ function MiniCalendar({ notAvailable = [] }) {
           gap: "2px",
         }}
       >
-        {dayNames.map((day, index) => (
-          <div key={`${day}-${index}`} style={{ fontWeight: "bold", padding: "4px 0" }}>
+        {dayNames.map((day, i) => (
+          <div key={`${day}-${i}`} style={{ fontWeight: "bold", padding: "4px 0" }}>
             {day}
           </div>
         ))}
@@ -108,17 +101,20 @@ function MiniCalendar({ notAvailable = [] }) {
           const isEmpty = !day;
           const isSelected = day === selectedDate;
 
-          // 배경색 조건
           let backgroundColor = "#fff";
           if (isEmpty) backgroundColor = "#f5f5f5";
           else if (isUnavailable) backgroundColor = "#fff";
-          else if (isSelected) backgroundColor = "#facc15"; // 진한 노랑
-          else backgroundColor = "#fef9c3"; // 연한 노랑
+          else if (isSelected) backgroundColor = "#facc15"; // 선택된 날짜 강조
+          else backgroundColor = "#fef9c3"; // 기본 가능 날짜
 
           return (
             <div
               key={idx}
-              onClick={() => !isUnavailable && !isEmpty && handleDateClick(day)}
+              onClick={() => {
+                if (!isUnavailable && !isEmpty) {
+                  handleDateClick(day);
+                }
+              }}
               style={{
                 padding: "2px 0",
                 height: "2rem",

@@ -1,10 +1,17 @@
+import React, { useState } from "react";
 import SubjectCard from "./res_SubjectCard";
 import NumberInput from "./res_NumberInput";
 import CalendarInput from "./res_CalendarInput";
 import MiniCard from "./res_MiniCard";
+import OptSelection from "./res_OptSelection";
+import Bttn from "./res_Bttn";
 
 const BookingForm = () => {
-  // 예약 불가 날짜 정보
+  const [guestCount, setGuestCount] = useState("0");
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [occasion, setOccasion] = useState("");
+
   const NotAvailableDate = [
     { month: "Jan", date: [14, 16, 17, 18] },
     { month: "Feb", date: [1, 2, 3, 4] },
@@ -12,33 +19,79 @@ const BookingForm = () => {
     { month: "Apr", date: [17, 18, 19, 20] },
   ];
 
-  // 예약 가능 시간
   const AvailableTime = [
     "9:00", "10:00", "11:00", "12:00", "13:00", "14:00",
-    "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"
+    "15:00", "16:00", "17:00", "18:00", "19:00", "20:00",
   ];
 
-  // 카드 섹션
+  const OccasionOptions = ["Birthday", "Anniversary"];
+
+  // ✅ 버튼 클릭 시 예약 정보 알림
+  const handleSubmit = () => {
+    const ReserveInfo = {
+      guests: guestCount,
+      date: selectedDate ? `${selectedDate.month} ${selectedDate.date}` : "",
+      time: selectedTime,
+      occasion: occasion,
+    };
+
+    alert(`Reservation Info:\n\n Number of guests ${ReserveInfo.guests}\n Date: ${ReserveInfo.date}\n Time: ${ReserveInfo.time}\n Occasion: ${ReserveInfo.occasion}`);
+  };
+
+  // ✅ 각 입력 UI를 카드에 전달
   const cardSection = [
-    { subject: "No of Guests", object: <NumberInput /> },
-    { subject: "Date", object: <CalendarInput notAvailable={NotAvailableDate} /> },
+    {
+      subject: "No of Guests",
+      object: <NumberInput value={guestCount} onChange={setGuestCount} />,
+    },
+    {
+      subject: "Date",
+      object: (
+        <CalendarInput
+          notAvailable={NotAvailableDate}
+          onDateSelect={(month, date) => setSelectedDate({ month, date })}
+        />
+      ),
+    },
     {
       subject: "Time",
       object: (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+        <>
           {AvailableTime.map((time, index) => (
-            <MiniCard key={index} subject={time} />
+            <MiniCard
+              key={index}
+              subject={time}
+              selected={selectedTime === time}
+              onClick={setSelectedTime}
+            />
           ))}
-        </div>
+        </>
       ),
     },
-    { subject: "Occasion", object: "object4" },
+    {
+      subject: "Occasion",
+      object: (
+        <OptSelection
+          options={OccasionOptions}
+          value={occasion}
+          onChange={setOccasion}
+        />
+      ),
+    },
   ];
 
   return (
-    <section id="BookingForm-section" className="BookingForm">
+    <section
+        id="BookingForm-section"
+        className="BookingForm"
+        role="form"
+        aria-labelledby="reservation-heading"
+        >
+
       <br />
-      <h1 style={{ color: "#495e57" }}>Table Reservation</h1>
+      <h1 id="reservation-heading" style={{ color: "#495e57" }}>
+        Table Reservation
+      </h1>
 
       <div
         className="BookingDetail"
@@ -55,6 +108,9 @@ const BookingForm = () => {
             object={item.object}
           />
         ))}
+      </div>
+      <div className="submitBttn" style={{ marginTop: "1rem" }}>
+        <Bttn label="Reserve" onClick={handleSubmit} />
       </div>
     </section>
   );

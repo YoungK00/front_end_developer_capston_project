@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function NumberInput() {
-  const [inputValue, setInputValue] = useState("0");
+function NumberInput({ value = "0", onChange }) {
+  const [inputValue, setInputValue] = useState(value);
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
+  const handleChange = (newValue) => {
+    setInputValue(newValue);
+    onChange?.(newValue);
+  };
 
   const handleIncrement = () => {
     const num = parseInt(inputValue, 10) || 0;
     if (num < 20) {
-      setInputValue(String(num + 1));
+      handleChange(String(num + 1));
     }
   };
 
   const handleDecrement = () => {
     const num = parseInt(inputValue, 10) || 0;
-    setInputValue(String(num > 0 ? num - 1 : 0));
+    if (num > 0) {
+      handleChange(String(num - 1));
+    }
   };
 
   const handleInputChange = (e) => {
@@ -20,22 +31,22 @@ function NumberInput() {
     if (/^\d*$/.test(value)) {
       const num = parseInt(value, 10);
       if (value === "") {
-        setInputValue(""); // 사용자 입력 중 빈 값 허용
+        handleChange(""); // 입력 중 빈 문자열 허용
       } else if (num <= 20) {
-        setInputValue(value);
+        handleChange(value);
       }
     }
   };
 
   const handleBlur = () => {
-    if (inputValue === "" || parseInt(inputValue, 10) < 0) {
-      setInputValue("0");
-    } else if (parseInt(inputValue, 10) > 20) {
-      setInputValue("20");
+    const num = parseInt(inputValue, 10);
+    if (inputValue === "" || isNaN(num) || num < 0) {
+      handleChange("0");
+    } else if (num > 20) {
+      handleChange("20");
     }
   };
 
-  // ✨ 스타일 객체 정의
   const containerStyle = {
     padding: "10px",
     display: "flex",
@@ -43,7 +54,7 @@ function NumberInput() {
   };
 
   const boxStyle = {
-    backgroundColor: "#fcd34d", // 진한 노란색
+    backgroundColor: "#fcd34d",
     padding: "1px",
     borderRadius: "10px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
@@ -52,13 +63,13 @@ function NumberInput() {
   };
 
   const buttonStyle = {
-    backgroundColor: "transparent", // 배경 투명
-    border: "none",                 // 테두리 없음
+    backgroundColor: "transparent",
+    border: "none",
     fontSize: "25px",
     cursor: "pointer",
     padding: "1px 5px",
-    color: "#333",                  // 글자색
-  };  
+    color: "#333",
+  };
 
   const inputStyle = {
     width: "40px",
@@ -73,15 +84,20 @@ function NumberInput() {
   return (
     <div style={containerStyle}>
       <div style={boxStyle}>
-        <button onClick={handleDecrement} style={buttonStyle}>-</button>
+        <button onClick={handleDecrement} style={buttonStyle}>
+          -
+        </button>
         <input
           type="text"
           value={inputValue}
           onChange={handleInputChange}
           onBlur={handleBlur}
           style={inputStyle}
+          aria-label="Number of guests"
         />
-        <button onClick={handleIncrement} style={buttonStyle}>+</button>
+        <button onClick={handleIncrement} style={buttonStyle}>
+          +
+        </button>
       </div>
     </div>
   );
