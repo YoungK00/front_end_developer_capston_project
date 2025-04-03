@@ -80,6 +80,7 @@ const Nav = () => {
       <a href="#BookingPage-section" onClick={handleClick("BookingPage")} style={navItemStyle}>
         <h2>Booking</h2>
       </a>
+
     </nav>
   );
 };

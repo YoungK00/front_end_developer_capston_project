@@ -1,4 +1,4 @@
-const SubjectCard = ({ subject, object, guideMessage }) => {
+const SubjectCard = ({ subject, object, guideMessage, confirmMessage }) => {
   return (
     <div
       className="subjectCard"
@@ -23,10 +23,11 @@ const SubjectCard = ({ subject, object, guideMessage }) => {
           WebkitOverflowScrolling: "touch",
         }}
       >
-        {object}
+        {/* ✅ object가 있으면 object를, 없으면 confirmMessage를 출력 */}
+        {object ? object : <p>{confirmMessage}</p>}
       </div>
 
-      {/* 🔴 guideMessage 빨간 텍스트 스타일 추가 */}
+      {/* 🔴 guideMessage 빨간 텍스트 */}
       {guideMessage && (
         <div style={{ color: "#dc2626", fontSize: "0.9rem", marginTop: "0.5rem" }}>
           {guideMessage}
