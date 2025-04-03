@@ -1,4 +1,4 @@
-const SubjectCard = ({ subject, object }) => {
+const SubjectCard = ({ subject, object, guideMessage }) => {
   return (
     <div
       className="subjectCard"
@@ -25,6 +25,13 @@ const SubjectCard = ({ subject, object }) => {
       >
         {object}
       </div>
+
+      {/* 🔴 guideMessage 빨간 텍스트 스타일 추가 */}
+      {guideMessage && (
+        <div style={{ color: "#dc2626", fontSize: "0.9rem", marginTop: "0.5rem" }}>
+          {guideMessage}
+        </div>
+      )}
     </div>
   );
 };

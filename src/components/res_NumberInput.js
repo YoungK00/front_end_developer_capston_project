@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function NumberInput({ value = "0", onChange }) {
+function NumberInput({ value = "0", onChange, guideMessage }) {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
@@ -29,10 +29,9 @@ function NumberInput({ value = "0", onChange }) {
   const handleInputChange = (e) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
-      const num = parseInt(value, 10);
       if (value === "") {
-        handleChange(""); // 입력 중 빈 문자열 허용
-      } else if (num <= 20) {
+        handleChange("");
+      } else {
         handleChange(value);
       }
     }
@@ -50,7 +49,8 @@ function NumberInput({ value = "0", onChange }) {
   const containerStyle = {
     padding: "10px",
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center",
   };
 
   const boxStyle = {
@@ -84,9 +84,7 @@ function NumberInput({ value = "0", onChange }) {
   return (
     <div style={containerStyle}>
       <div style={boxStyle}>
-        <button onClick={handleDecrement} style={buttonStyle}>
-          -
-        </button>
+        <button onClick={handleDecrement} style={buttonStyle}>-</button>
         <input
           type="text"
           value={inputValue}
@@ -95,9 +93,7 @@ function NumberInput({ value = "0", onChange }) {
           style={inputStyle}
           aria-label="Number of guests"
         />
-        <button onClick={handleIncrement} style={buttonStyle}>
-          +
-        </button>
+        <button onClick={handleIncrement} style={buttonStyle}>+</button>
       </div>
     </div>
   );

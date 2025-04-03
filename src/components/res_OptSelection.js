@@ -18,6 +18,7 @@ const OptSelection = ({ options, value, onChange }) => {
         </option>
       ))}
     </select>
+    
   );
 };
 
