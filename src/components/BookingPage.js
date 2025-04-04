@@ -96,7 +96,7 @@ const BookingForm = ({ submitForm }) => {
       occasion: occasion,
     };
 
-    submitForm(ReserveInfo); // ✅ 예약 정보 전달
+    submitForm(ReserveInfo);
   };
 
   const cardSection = [

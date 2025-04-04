@@ -6,7 +6,7 @@ const MiniCard = ({ subject, selected, onClick }) => {
         flexShrink: 0,
         padding: "0.5rem 1rem",
         borderRadius: "6px",
-        backgroundColor: selected ? "#facc15" : "#f4f4f4", // ✅ 선택 시 노란색
+        backgroundColor: selected ? "#facc15" : "#f4f4f4",
         border: "1px solid #ccc",
         fontSize: "0.9rem",
         minWidth: "60px",

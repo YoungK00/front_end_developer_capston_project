@@ -1,4 +1,4 @@
-// ✅ res_CalendarInput.js - useEffect 의존성 및 무한 루프 방지 개선
+
 import React, { useState, useEffect } from "react";
 
 function MiniCalendar({ notAvailable = [], onDateSelect }) {
@@ -23,7 +23,7 @@ function MiniCalendar({ notAvailable = [], onDateSelect }) {
       }
     };
     init();
-  }, []); // ✅ 최초 1회만 실행되도록 구성
+  }, []);
 
   const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
   const getStartDay = (year, month) => new Date(year, month, 1).getDay();

@@ -34,7 +34,6 @@ const Nav = () => {
     }
   };
 
-  // 🔧 스타일 정의
   const navStyle = {
     backgroundColor: "#ffffff",
     height: "10vh",
@@ -60,7 +59,7 @@ const Nav = () => {
     maxHeight: "30px",
   };
 
-  // 모바일 대응: 하단 고정
+
   const isMobile = window.innerWidth <= 450;
   if (isMobile) {
     navStyle.top = "auto";

@@ -13,7 +13,7 @@ const Header = ({ colors, setSearchText }) => {
         left: 0,
         width: "100%",
         zIndex: 1000,
-        padding: "0 3vw", // 여백 줄임
+        padding: "0 3vw", 
         boxSizing: "border-box",
     };
 

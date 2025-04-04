@@ -33,7 +33,6 @@ const ConfirmedBookingPage = ({ formData }) => {
         ))}
       </div>
 
-     {/* ✅ 예약 정보 요약을 확실히 텍스트로 보여주기 */}
         <div style={{
           marginTop: "2rem",
           padding: "1rem",

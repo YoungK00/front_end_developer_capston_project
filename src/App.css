@@ -1,4 +1,4 @@
-/* 전체 페이지가 좌우로 밀리는 걸 방지 */
+
 html, body {
   margin: 0;
   padding: 0;
@@ -8,11 +8,11 @@ html, body {
   margin-left: 2vw;
   margin-right: 2vw;
 
-  /* Firefox 스크롤바 숨기기 */
+
   scrollbar-width: none;
 }
 
-/* ✅ 크롬/사파리 등 WebKit 기반 브라우저 스크롤바 숨기기 */
+
 ::-webkit-scrollbar {
   display: none;
 }

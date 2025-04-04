@@ -15,8 +15,7 @@ function App() {
     bg_white: "rgb(255, 255, 255)"
   };
 
-  const [confirmedData, setConfirmedData] = useState(null); // 예약 정보 상태 추가
-
+  const [confirmedData, setConfirmedData] = useState(null);
   const submitForm = (formData) => {
     const success = submitAPI(formData);
     if (success) {
@@ -36,7 +35,7 @@ function App() {
       <main>
         <Landing />
         <BookingPage submitForm={submitForm} />
-        <ConfirmedBookingPage formData={confirmedData} /> {/* 예약 정보 props로 전달 */}
+        <ConfirmedBookingPage formData={confirmedData} />
       </main>
       <Nav />
       <footer></footer>
